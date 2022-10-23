@@ -16,6 +16,9 @@ import org.wahlzeit.utils.*;
  */
 public class Photo extends DataObject {
 
+	/** homework1 */
+	public Location location;
+
 	/**
 	 * 
 	 */
@@ -94,6 +97,12 @@ public class Photo extends DataObject {
 	 */
 	public Photo() {
 		id = PhotoId.getNextId();
+		this.location = null;	//no location provided
+		incWriteCount();
+	}
+	public Photo(Location location) {
+		id = PhotoId.getNextId();
+		this.location = location;	//location provided, can also be provided as null
 		incWriteCount();
 	}
 	
@@ -103,7 +112,12 @@ public class Photo extends DataObject {
 	 */
 	public Photo(PhotoId myId) {
 		id = myId;
-		
+		this.location = null;	//no location provided
+		incWriteCount();
+	}
+	public Photo(PhotoId myId, Location location) {
+		id = myId;
+		this.location = location;	//location provided, can also be provided as null
 		incWriteCount();
 	}
 	
