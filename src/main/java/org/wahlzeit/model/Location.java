@@ -1,9 +1,6 @@
 package org.wahlzeit.model;
 
-import org.wahlzeit.services.DataObject;
-
 import java.security.InvalidParameterException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,5 +13,10 @@ public class Location {
         }
         this.coordinate = coordinate;
     }
-
+    public static Location readFrom(ResultSet rset) throws SQLException {
+        return new Location(Coordinate.readFrom(rset));
+    }
+    public void writeOn(ResultSet rset) throws SQLException {
+        this.coordinate.writeOn(rset);
+    }
 }
