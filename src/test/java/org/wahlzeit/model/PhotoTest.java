@@ -2,6 +2,12 @@ package org.wahlzeit.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import static org. mockito.Mockito.*;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class PhotoTest {
     @Test
@@ -56,11 +62,25 @@ public class PhotoTest {
         //test if id is correct
         Assert.assertNotNull(photo2.id);
         Assert.assertEquals(id.value, photo2.id.value);
-
-
     }
-
-
-
-
+    @Test
+    public void testWriteOn() throws SQLException {
+        Coordinate coor = new Coordinate(4,5,6);
+        Location loc = new Location(coor);
+        ResultSet rset = Mockito.mock(ResultSet.class);
+        loc.writeOn(rset);
+        verify(rset, Mockito.times(1)).updateDouble("coordinate_x", coor.getX());
+        verify(rset, Mockito.times(1)).updateDouble("coordinate_y", coor.getY());
+        verify(rset, Mockito.times(1)).updateDouble("coordinate_z", coor.getZ());
+    }
+    @Test
+    public void testReadFrom() throws SQLException {
+        Coordinate coor = new Coordinate(4,5,6);
+        Location loc = new Location(coor);
+        ResultSet rset = Mockito.mock(ResultSet.class);
+        Location.readFrom(rset);
+        verify(rset, Mockito.times(1)).getDouble("coordinate_x");
+        verify(rset, Mockito.times(1)).getDouble("coordinate_y");
+        verify(rset, Mockito.times(1)).getDouble("coordinate_z");
+    }
 }
