@@ -23,12 +23,14 @@ public class PhotoFactory {
 	 * Public singleton access method.
 	 */
 	public static synchronized PhotoFactory getInstance() {
-		if (instance == null) {
+		return FlowerPhotoFactory.getInstance();
+/*		if (instance == null) {
 			SysLog.logSysInfo("setting generic PhotoFactory");
 			setInstance(new PhotoFactory());
 		}
 		
 		return instance;
+*/
 	}
 	
 	/**
@@ -38,7 +40,6 @@ public class PhotoFactory {
 		if (instance != null) {
 			throw new IllegalStateException("attempt to initialize PhotoFactory twice");
 		}
-		
 		instance = photoFactory;
 	}
 	
