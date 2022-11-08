@@ -37,10 +37,9 @@ public class SphericCoordinateTest {
     }
     @Test
     public void centralAngleTest() {
-        SphericCoordinate c1 = new SphericCoordinate(3, 5, 1),
+        SphericCoordinate c1 = new SphericCoordinate(3, 2, 1),
                 c2 = new SphericCoordinate(2,1,3);
-        assertEquals(1.00066, c1.getCentralAngle(c2), 0.0001);
-        //assertEquals(1.212248, c1.getCentralAngle(c2), 0.0001);
+        assertEquals(1.212248, c1.getCentralAngle(c2), 0.0001);
         assertEquals(0, c1.getCentralAngle(c1), 0);
     }
 }
