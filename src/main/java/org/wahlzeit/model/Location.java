@@ -14,7 +14,7 @@ public class Location {
         this.coordinate = coordinate;
     }
     public static Location readFrom(ResultSet rset) throws SQLException {
-        return new Location(Coordinate.readFrom(rset));
+        return new Location(CartesianCoordinate.readFrom(rset));
     }
     public void writeOn(ResultSet rset) throws SQLException {
         this.coordinate.writeOn(rset);
