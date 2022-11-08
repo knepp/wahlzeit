@@ -12,13 +12,13 @@ import static org.junit.Assert.*;
 public class LocationTest {
     @Test
     public void testCreateNotNull() {
-        Coordinate coordinate = new Coordinate(1.3,3.2,5.1);
+        CartesianCoordinate coordinate = new CartesianCoordinate(1.3,3.2,5.1);
 
         Location location = new Location(coordinate);
         assertNotNull(location);
-        assertEquals(1.3, location.coordinate.getX(), 0.0);
-        assertEquals(3.2, location.coordinate.getY(), 0.0);
-        assertEquals(5.1, location.coordinate.getZ(), 0.0);
+        assertEquals(1.3, location.coordinate.asCartesianCoordinate().getX(), 0.0);
+        assertEquals(3.2, location.coordinate.asCartesianCoordinate().getY(), 0.0);
+        assertEquals(5.1, location.coordinate.asCartesianCoordinate().getZ(), 0.0);
     }
     @Test
     public void testCreateNull() {

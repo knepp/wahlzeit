@@ -39,33 +39,33 @@ public class PhotoTest {
     }
     @Test
     public void testCreateWithLocation() {
-        Coordinate coor1 = new Coordinate(1.2,3.4,5.6);
+        CartesianCoordinate coor1 = new CartesianCoordinate(1.2,3.4,5.6);
         Location location1 = new Location(coor1);
         Photo photo1 = new Photo(location1);
         Assert.assertNotNull(photo1.location);
         // test if connection from photo to location to coordinate ist there with all values
-        Assert.assertEquals(1.2, photo1.location.coordinate.getX(), 0.0);
-        Assert.assertEquals(3.4, photo1.location.coordinate.getY(), 0.0);
-        Assert.assertEquals(5.6, photo1.location.coordinate.getZ(), 0.0);
+        Assert.assertEquals(1.2, photo1.location.coordinate.asCartesianCoordinate().getX(), 0.0);
+        Assert.assertEquals(3.4, photo1.location.coordinate.asCartesianCoordinate().getY(), 0.0);
+        Assert.assertEquals(5.6, photo1.location.coordinate.asCartesianCoordinate().getZ(), 0.0);
 
 
-        Coordinate coor2 = new Coordinate(7.8,9.0,10.11);
+        CartesianCoordinate coor2 = new CartesianCoordinate(7.8,9.0,10.11);
         Location location2 = new Location(coor2);
         PhotoId id = PhotoId.getNextId();   //can also be null for this test
         Photo photo2 = new Photo(id, location2);
         Assert.assertNotNull(photo2.location);
         // test if connection from photo to location to coordinate ist there with all values
         Assert.assertNotNull(photo2.location.coordinate);
-        Assert.assertEquals(7.8, photo2.location.coordinate.getX(), 0.0);
-        Assert.assertEquals(9.0, photo2.location.coordinate.getY(), 0.0);
-        Assert.assertEquals(10.11, photo2.location.coordinate.getZ(), 0.0);
+        Assert.assertEquals(7.8, photo2.location.coordinate.asCartesianCoordinate().getX(), 0.0);
+        Assert.assertEquals(9.0, photo2.location.coordinate.asCartesianCoordinate().getY(), 0.0);
+        Assert.assertEquals(10.11, photo2.location.coordinate.asCartesianCoordinate().getZ(), 0.0);
         //test if id is correct
         Assert.assertNotNull(photo2.id);
         Assert.assertEquals(id.value, photo2.id.value);
     }
     @Test
     public void testWriteOn() throws SQLException {
-        Coordinate coor = new Coordinate(4,5,6);
+        CartesianCoordinate coor = new CartesianCoordinate(4,5,6);
         Location loc = new Location(coor);
         ResultSet rset = Mockito.mock(ResultSet.class);
         loc.writeOn(rset);
@@ -75,7 +75,7 @@ public class PhotoTest {
     }
     @Test
     public void testReadFrom() throws SQLException {
-        Coordinate coor = new Coordinate(4,5,6);
+        CartesianCoordinate coor = new CartesianCoordinate(4,5,6);
         Location loc = new Location(coor);
         ResultSet rset = Mockito.mock(ResultSet.class);
         Location.readFrom(rset);

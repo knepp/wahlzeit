@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 public class FlowerPhotoTest {
     @Test
     public void constructorsTest() {
-        Location location = new Location(new Coordinate(1,2,3));
+        Location location = new Location(new CartesianCoordinate(1,2,3));
         FlowerPhoto ph1 = new FlowerPhoto();
         FlowerPhoto ph2 = new FlowerPhoto("Primrose");
         FlowerPhoto ph3 = new FlowerPhoto(location);
