@@ -22,7 +22,7 @@ public class SphericCoordinateTest {
 
     @Test
     public void testAsCartesianCoordinate() {
-        SphericCoordinate c = new SphericCoordinate(1.1,5.2,3.3);
+        SphericCoordinate c = new SphericCoordinate(1.1,2.7,3.3);
         SphericCoordinate coor2 = c.asCartesianCoordinate().asSphericCoordinate();
         assertEquals(c.getPhi(), coor2.getPhi(), 0.1);
         assertEquals(c.getTheta(), coor2.getTheta(), 0.1);
