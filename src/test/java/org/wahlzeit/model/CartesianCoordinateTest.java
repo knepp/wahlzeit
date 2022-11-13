@@ -63,9 +63,12 @@ public class CartesianCoordinateTest {
         CartesianCoordinate coor = new CartesianCoordinate(4.6, 7.2, 45.23);
         SphericCoordinate coor2 = coor.asSphericCoordinate();
         CartesianCoordinate coor3 = coor2.asCartesianCoordinate();
-        assertEquals(coor3.getX(), coor.getX(), 0.1);
-        assertEquals(coor3.getY(), coor.getY(), 0.1);
-        assertEquals(coor3.getZ(), coor.getZ(), 0.1);
+        assertTrue(coor.isEqual(coor3));
+
+        coor = new CartesianCoordinate(-2.3, 3.2, 1.4);
+        coor2 = coor.asSphericCoordinate();
+        coor3 = coor2.asCartesianCoordinate();
+        assertTrue(coor.isEqual(coor3));
     }
     @Test
     public void testAsCartesianCoordinate() {

@@ -71,8 +71,8 @@ public class CartesianCoordinate implements Coordinate {
     public SphericCoordinate asSphericCoordinate() {
         double r, t, p;
         r = Math.sqrt(x*x + y*y + z*z);
-        t = (Math.acos(z/r)) % Math.PI;
-        p = (Math.atan2(y, x)) % Math.PI;
+        t = (Math.acos(z/r));
+        p = (Math.atan2(y, x));
         return new SphericCoordinate(p, t, r);
     }
 

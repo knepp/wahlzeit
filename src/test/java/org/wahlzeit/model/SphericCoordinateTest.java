@@ -1,6 +1,5 @@
 package org.wahlzeit.model;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -41,5 +40,18 @@ public class SphericCoordinateTest {
                 c2 = new SphericCoordinate(2,1,3);
         assertEquals(1.212248, c1.getCentralAngle(c2), 0.0001);
         assertEquals(0, c1.getCentralAngle(c1), 0);
+    }
+    @Test
+    public void testMyModulo() {
+        double a = 1.23;
+        assertEquals(a, SphericCoordinate.moduloAngle(a + (2*Math.PI)), 0.0001);
+        a = 3.14;   //edge case - close to pi
+        assertEquals(a, SphericCoordinate.moduloAngle(a + (2*Math.PI)), 0.0001);
+        a = -1.23;
+        assertEquals(a, SphericCoordinate.moduloAngle(a + (2*Math.PI)), 0.0001);
+        a = -3.14;  //edge case - close to -pi
+        assertEquals(a, SphericCoordinate.moduloAngle(a + (2*Math.PI)), 0.0001);
+        a = 0;
+        assertEquals(a, SphericCoordinate.moduloAngle(a + (2*Math.PI)), 0.0001);
     }
 }

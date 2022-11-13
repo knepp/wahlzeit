@@ -7,8 +7,8 @@ public class SphericCoordinate implements Coordinate{
     private double phi, theta, radius;
 
     public SphericCoordinate(double phi, double theta, double radius) {
-        this.phi = phi % Math.PI;
-        this.theta = theta % Math.PI;
+        this.phi = moduloAngle(phi);
+        this.theta = moduloAngle(theta);
         this.radius = radius;
     }
 
@@ -40,7 +40,7 @@ public class SphericCoordinate implements Coordinate{
     }
 
     @Override
-    public double getCentralAngle(Coordinate coordinate) {//TODO
+    public double getCentralAngle(Coordinate coordinate) {
         SphericCoordinate c = coordinate.asSphericCoordinate();
         double deltaPhi = Math.abs(c.phi - this.phi);
         double deltaT = Math.abs(c.theta - this.theta);
@@ -65,5 +65,18 @@ public class SphericCoordinate implements Coordinate{
         rset.updateDouble("coordinate_x", coor.getX());
         rset.updateDouble("coordinate_y", coor.getY());
         rset.updateDouble("coordinate_z", coor.getZ());
+    }
+
+    /* disclaimer: method copied from http://www.java2s.com/example/java-utility-method/double-number-mod/moduloangle-double-angle-0a3b6.html
+     * License: Open Source License
+     */
+    public static double moduloAngle(double angle) {
+        while (angle > Math.PI) {
+            angle -= 2 * Math.PI;
+        }
+        while (angle < -Math.PI) {
+            angle += 2 * Math.PI;
+        }
+        return angle;
     }
 }
