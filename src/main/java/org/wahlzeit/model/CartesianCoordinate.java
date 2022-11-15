@@ -4,10 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class CartesianCoordinate implements Coordinate {
-    private double x;
-    private double y;
-    private double z;
+public class CartesianCoordinate extends AbstractCoordinate {
+    private final double x, y, z;
 
     public CartesianCoordinate(double x, double y, double z) {
         this.x = x;
@@ -46,21 +44,6 @@ public class CartesianCoordinate implements Coordinate {
                 rset.getDouble("coordinate_y"), rset.getDouble("coordinate_z"));
     }
 
-    public void writeOn(ResultSet rset) throws SQLException {
-        rset.updateDouble("coordinate_x", x);
-        rset.updateDouble("coordinate_y", y);
-        rset.updateDouble("coordinate_z", z);
-    }
-
-    public double getCartesianDistance(Coordinate coordinate) {
-        CartesianCoordinate coor = coordinate.asCartesianCoordinate();
-        if (coor == null)
-            return -1;
-        return Math.sqrt(Math.pow(x - coor.getX(), 2) +
-                Math.pow(y - coor.getY(), 2) +
-                Math.pow(z - coor.getZ(), 2));
-    }
-
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
         return this;
@@ -74,23 +57,5 @@ public class CartesianCoordinate implements Coordinate {
         t = SphericCoordinate.moduloAngle(Math.acos(z/r));
         p = SphericCoordinate.moduloAngle(Math.atan2(y, x));
         return new SphericCoordinate(p, t, r);
-    }
-
-    @Override
-    public double getCentralAngle(Coordinate coordinate) {
-        return this.asSphericCoordinate().getCentralAngle(coordinate.asSphericCoordinate());
-    }
-
-    public boolean isEqual(CartesianCoordinate coor) {
-        if (coor == null)
-            return false;
-        double tolerance = 0.000001;
-        double xDiff = Math.abs(x - coor.x);
-        double yDiff = Math.abs(y - coor.y);
-        double zDiff = Math.abs(z - coor.z);
-        return xDiff < tolerance && yDiff < tolerance && zDiff < tolerance;
-    }
-    public boolean isEqual(Coordinate coor) {
-        return this.isEqual(coor.asCartesianCoordinate());
     }
 }

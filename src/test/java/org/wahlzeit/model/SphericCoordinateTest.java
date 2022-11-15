@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class SphericCoordinateTest {
     @Test
-    public void isEqual() {
+    public void testIsEqual() {
         SphericCoordinate c1 = new SphericCoordinate(1,2,3),
                 c2 = new SphericCoordinate(1,2,3),
                 c3 = new SphericCoordinate(3,2,1);
