@@ -15,7 +15,7 @@ public abstract class AbstractCoordinate implements Coordinate {
         CartesianCoordinate coordinate1 = this.asCartesianCoordinate();
         CartesianCoordinate coordinate2 = coordinate.asCartesianCoordinate();
         if (coordinate2 == null)
-            return -1;
+            throw new IllegalArgumentException();
         return Math.sqrt(Math.pow(coordinate1.getX() - coordinate2.getX(), 2) +
                 Math.pow(coordinate1.getY() - coordinate2.getY(), 2) +
                 Math.pow(coordinate1.getZ() - coordinate2.getZ(), 2));
