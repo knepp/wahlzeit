@@ -3,6 +3,8 @@ package org.wahlzeit.model;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 public class CartesianCoordinateTest {
@@ -21,7 +23,7 @@ public class CartesianCoordinateTest {
         assertEquals(-5.1, coordinate2.getZ(), 0.0);
     }
     @Test
-    public void testGetDistance() {
+    public void testGetDistance() throws ValueOutOfRangeException {
         CartesianCoordinate c1 = new CartesianCoordinate(4,5.7,3.7),
                 c2 = new CartesianCoordinate(9.3,45.67,3.5);
         assertEquals(c1.getCartesianDistance(c2), 40.320353,0.001);
@@ -30,7 +32,7 @@ public class CartesianCoordinateTest {
         assertEquals(c3.getCartesianDistance(c4), 52.6992115,0.001);
     }
     @Test
-    public void testIsEqual() {
+    public void testIsEqual() throws ValueOutOfRangeException {
         CartesianCoordinate c1 = new CartesianCoordinate(4,5.7,3.7),
                 c2 = new CartesianCoordinate(9.3,45.67,3.5),
                 c3 = new CartesianCoordinate(9.3,45.67,3.5);
@@ -59,7 +61,7 @@ public class CartesianCoordinateTest {
 
 
     @Test
-    public void testAsSpherical() {
+    public void testAsSpherical() throws ValueOutOfRangeException {
         CartesianCoordinate coor = new CartesianCoordinate(4.6, 7.2, 45.23);
         SphericCoordinate coor2 = coor.asSphericCoordinate();
         CartesianCoordinate coor3 = coor2.asCartesianCoordinate();
@@ -76,9 +78,20 @@ public class CartesianCoordinateTest {
         assertEquals(c, c.asCartesianCoordinate());
     }
     @Test
-    public void testIsEqualDifferentCoordinates() {
+    public void testIsEqualDifferentCoordinates() throws ValueOutOfRangeException {
         CartesianCoordinate c1 = new CartesianCoordinate(1,2,3);
         SphericCoordinate c2 = c1.asSphericCoordinate();
         assertTrue(c1.isEqual(c2));
+    }
+
+    //test pre-conditions
+    @Test
+    public void testPreCondReadFrom() throws  SQLException{
+        try {
+            CartesianCoordinate.readFrom(null);
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+        fail();
     }
 }

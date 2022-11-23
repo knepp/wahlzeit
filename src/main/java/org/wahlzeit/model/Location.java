@@ -16,7 +16,7 @@ public class Location {
     public static Location readFrom(ResultSet rset) throws SQLException {
         return new Location(CartesianCoordinate.readFrom(rset));
     }
-    public void writeOn(ResultSet rset) throws SQLException {
+    public void writeOn(ResultSet rset) throws SQLException, ValueOutOfRangeException {
         this.coordinate.writeOn(rset);
     }
 }

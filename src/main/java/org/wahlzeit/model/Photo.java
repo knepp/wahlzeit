@@ -185,7 +185,11 @@ public class Photo extends DataObject {
 		rset.updateInt("no_votes", noVotes);
 		rset.updateLong("creation_time", creationTime);
 		if (location != null)
-			location.writeOn(rset);
+			try {
+				location.writeOn(rset);
+			} catch (ValueOutOfRangeException e) {
+				System.err.println(e + "\tconversion to cartesian failed");
+			}
 	}
 
 	/**

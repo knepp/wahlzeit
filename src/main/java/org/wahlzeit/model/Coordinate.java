@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface Coordinate {
-    CartesianCoordinate asCartesianCoordinate();
-    double getCartesianDistance(Coordinate coordinate);
-    SphericCoordinate asSphericCoordinate();
-    double getCentralAngle(Coordinate coordinate);
-    boolean isEqual(Coordinate coordinate);
-    void writeOn(ResultSet rset) throws SQLException;
+    CartesianCoordinate asCartesianCoordinate() throws ValueOutOfRangeException;
+    double getCartesianDistance(Coordinate coordinate) throws ValueOutOfRangeException;
+    SphericCoordinate asSphericCoordinate() throws ValueOutOfRangeException;
+    double getCentralAngle(Coordinate coordinate) throws ValueOutOfRangeException;
+    boolean isEqual(Coordinate coordinate) throws ValueOutOfRangeException;
+    void writeOn(ResultSet rset) throws SQLException, ValueOutOfRangeException;
 }

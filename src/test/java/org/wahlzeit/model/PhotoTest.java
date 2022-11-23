@@ -38,7 +38,7 @@ public class PhotoTest {
         Assert.assertEquals(id_b.value, photo2b.id.value);
     }
     @Test
-    public void testCreateWithLocation() {
+    public void testCreateWithLocation() throws ValueOutOfRangeException {
         CartesianCoordinate coor1 = new CartesianCoordinate(1.2,3.4,5.6);
         Location location1 = new Location(coor1);
         Photo photo1 = new Photo(location1);
@@ -64,7 +64,7 @@ public class PhotoTest {
         Assert.assertEquals(id.value, photo2.id.value);
     }
     @Test
-    public void testWriteOn() throws SQLException {
+    public void testWriteOn() throws SQLException, ValueOutOfRangeException {
         CartesianCoordinate coor = new CartesianCoordinate(4,5,6);
         Location loc = new Location(coor);
         ResultSet rset = Mockito.mock(ResultSet.class);
