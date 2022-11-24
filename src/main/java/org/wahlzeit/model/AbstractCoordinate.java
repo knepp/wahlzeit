@@ -13,6 +13,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 
     @Override
     public double getCartesianDistance(Coordinate coordinate) throws ValueOutOfRangeException {
+        //assert class invariant
+        assertClassInvariants(this);
+        assertClassInvariants(coordinate);
         //test pre-condition
         assertCoordinateInputNotNull(coordinate);
         //method
@@ -26,11 +29,17 @@ public abstract class AbstractCoordinate implements Coordinate {
         //post-condition
         if (ret < 0)
             throw new ValueOutOfRangeException("distance cannot be less than 0.");
+        //assert class invariant
+        assertClassInvariants(this);
+        assertClassInvariants(coordinate);
         return ret;
     }
 
     @Override
     public double getCentralAngle(Coordinate coordinate) throws ValueOutOfRangeException {
+        //assert class invariant
+        assertClassInvariants(this);
+        assertClassInvariants(coordinate);
         //test pre-condition
         assertCoordinateInputNotNull(coordinate);
         //method
@@ -44,11 +53,16 @@ public abstract class AbstractCoordinate implements Coordinate {
         //post-condition
         if(cAng < 0)
             throw new ValueOutOfRangeException("angle cannot be less than 0.");
+        //assert class invariant
+        assertClassInvariants(this);
+        assertClassInvariants(coordinate);
         return cAng;
     }
 
     @Override
     public void writeOn(ResultSet rset) throws SQLException, ValueOutOfRangeException {
+        //assert class invariant
+        assertClassInvariants(this);
         //pre-condition
         if (rset == null)
             throw new IllegalArgumentException();
@@ -58,10 +72,15 @@ public abstract class AbstractCoordinate implements Coordinate {
         rset.updateDouble("coordinate_y", coor.getY());
         rset.updateDouble("coordinate_z", coor.getZ());
         //no post-condition
+        //assert class invariant
+        assertClassInvariants(this);
     }
 
     @Override
     public boolean isEqual(Coordinate coor) throws ValueOutOfRangeException {
+        //assert class invariant
+        assertClassInvariants(this);
+        assertClassInvariants(coor);
         //no pre-condition as coor can perfectly well be null
         if (coor == null)
             return false;
@@ -71,12 +90,20 @@ public abstract class AbstractCoordinate implements Coordinate {
         double xDiff = Math.abs(c1.getX() - c2.getX());
         double yDiff = Math.abs(c1.getY() - c2.getY());
         double zDiff = Math.abs(c1.getZ() - c2.getZ());
-        return xDiff < tolerance && yDiff < tolerance && zDiff < tolerance;
+        boolean ret = xDiff < tolerance && yDiff < tolerance && zDiff < tolerance;
         //no post-condition
+        //assert class invariant
+        assertClassInvariants(this);
+        assertClassInvariants(coor);
+        return ret;
     }
 
     protected static void assertCoordinateInputNotNull(Coordinate coordinate) throws IllegalArgumentException {
         if (coordinate == null)
             throw new IllegalArgumentException();
+    }
+
+    protected static void assertClassInvariants(Coordinate coordinate) throws IllegalArgumentException{
+        //there is no invariant for Coordinate, so this function is empty.
     }
 }

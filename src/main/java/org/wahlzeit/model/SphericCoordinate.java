@@ -30,6 +30,8 @@ public class SphericCoordinate extends AbstractCoordinate{
 
     @Override
     public CartesianCoordinate asCartesianCoordinate() throws ValueOutOfRangeException {
+        //assert class invariant
+        assertClassInvariants(this);
         //pre-condition
         assertSphericValuesInRange(this);
         //method
@@ -41,6 +43,8 @@ public class SphericCoordinate extends AbstractCoordinate{
 
     @Override
     public SphericCoordinate asSphericCoordinate() {
+        //assert class invariant
+        assertClassInvariants(this);
         //no pre-condition needed
         return this;
         //no post-condition needed
