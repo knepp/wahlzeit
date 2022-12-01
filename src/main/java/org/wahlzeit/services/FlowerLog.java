@@ -1,5 +1,6 @@
 package org.wahlzeit.services;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,19 +11,22 @@ import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
 public class FlowerLog {
+    public static final String filename = "LogFile_FlowerLog.txt";
     private static boolean logFileEmpty = false;
     public static void logError(String error) {
-        System.out.println("TODO");//TODO
         if (!logFileEmpty) {
-            //TODO remove content of file
-            logFileEmpty = true;
+            try {
+                boolean result = Files.deleteIfExists(Paths.get(filename));
+                logFileEmpty = true;
+            } catch (IOException exception) {
+                logError("Old Logfile could not be deleted");
+            }
         }
-        try {
-            Files.writeString(
-                    Path.of(System.getProperty("java.io.tmpdir"), "filename.txt"),
-                    error + System.lineSeparator(),
-                    CREATE, APPEND
-            )
+        try
+        {
+            FileWriter fw = new FileWriter(filename,true);
+            fw.write(error + "\n");
+            fw.close();
         }catch (IOException e) {
             System.out.println("No error could be logged.");    //no error logging possible, also not for this error
         }
