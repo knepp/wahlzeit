@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.FlowerLog;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,6 +15,12 @@ public class FlowerPhotoManager extends PhotoManager {
         photoTagCollector = PhotoFactory.getInstance().createPhotoTagCollector();
     }
     protected FlowerPhoto createObject(ResultSet rset) throws SQLException {
-        return FlowerPhotoFactory.getInstance().createPhoto(rset);
+        try {
+            FlowerPhoto ph = FlowerPhotoFactory.getInstance().createPhoto(rset);
+            return ph;
+        } catch (SQLException exception) {
+            FlowerLog.logError("FlowerPhoto could not be created in FlowerPhotoManager.");
+            throw exception;
+        }
     }
 }

@@ -9,7 +9,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     public SphericCoordinate(double phi, double theta, double radius) throws ValueOutOfRangeException {
         //pre-condition
         if(radius < 0)
-            throw new ValueOutOfRangeException("Radius must be at least 0.");
+            throw new ValueOutOfRangeException("Radius must be at least 0. Exception thrown in SphericCoordinate constructor.");
         //method
         this.phi = moduloAngle(phi);
         this.theta = moduloAngle(theta);
@@ -31,7 +31,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     @Override
     public CartesianCoordinate asCartesianCoordinate() throws ValueOutOfRangeException {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //pre-condition
         assertSphericValuesInRange(this);
         //method
@@ -44,7 +44,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     @Override
     public SphericCoordinate asSphericCoordinate() {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //no pre-condition needed
         return this;
         //no post-condition needed
@@ -63,17 +63,17 @@ public class SphericCoordinate extends AbstractCoordinate{
         }
         //post-condition
         if(angle < -Math.PI || angle > Math.PI)
-            throw new ValueOutOfRangeException("Phi is out of range");
+            throw new ValueOutOfRangeException("Angle computed in moduloAngle is out of range - post-condition failed.");
         return angle;
     }
 
     protected static void assertSphericValuesInRange(SphericCoordinate coor) throws ValueOutOfRangeException {
         double p = coor.getPhi(), t = coor.getTheta(), r = coor.getRadius();
         if(p < -Math.PI || p > Math.PI)
-            throw new ValueOutOfRangeException("Phi is out of range");
+            throw new ValueOutOfRangeException("Phi is out of range in assertSphericValuesInRange.");
         if(t < -Math.PI || t > Math.PI)
-            throw new ValueOutOfRangeException("Theta is out of range");
+            throw new ValueOutOfRangeException("Theta is out of range in assertSphericValuesInRange.");
         if (r < 0)
-            throw new ValueOutOfRangeException("Radius cannot be less than 0");
+            throw new ValueOutOfRangeException("Radius cannot be less than 0; exception in assertSphericValuesInRange.");
     }
 }

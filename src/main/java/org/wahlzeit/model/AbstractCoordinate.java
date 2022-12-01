@@ -12,10 +12,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 
 
     @Override
-    public double getCartesianDistance(Coordinate coordinate) throws ValueOutOfRangeException {
+    public double getCartesianDistance(Coordinate coordinate) throws ValueOutOfRangeException, IllegalArgumentException {
         //assert class invariant
-        assertClassInvariants(this);
-        assertClassInvariants(coordinate);
+        assertClassInvariants();
         //test pre-condition
         assertCoordinateInputNotNull(coordinate);
         //method
@@ -28,18 +27,16 @@ public abstract class AbstractCoordinate implements Coordinate {
                         Math.pow(coordinate1.getZ() - coordinate2.getZ(), 2));
         //post-condition
         if (ret < 0)
-            throw new ValueOutOfRangeException("distance cannot be less than 0.");
+            throw new ValueOutOfRangeException("distance cannot be less than 0. Exception in getCartesianDistance.");
         //assert class invariant
-        assertClassInvariants(this);
-        assertClassInvariants(coordinate);
+        assertClassInvariants();
         return ret;
     }
 
     @Override
-    public double getCentralAngle(Coordinate coordinate) throws ValueOutOfRangeException {
+    public double getCentralAngle(Coordinate coordinate) throws ValueOutOfRangeException, IllegalArgumentException {
         //assert class invariant
-        assertClassInvariants(this);
-        assertClassInvariants(coordinate);
+        assertClassInvariants();
         //test pre-condition
         assertCoordinateInputNotNull(coordinate);
         //method
@@ -52,20 +49,19 @@ public abstract class AbstractCoordinate implements Coordinate {
                         Math.pow(Math.sin(deltaT/2), 2)));
         //post-condition
         if(cAng < 0)
-            throw new ValueOutOfRangeException("angle cannot be less than 0.");
+            throw new ValueOutOfRangeException("angle cannot be less than 0. Exception in getCentralAngle");
         //assert class invariant
-        assertClassInvariants(this);
-        assertClassInvariants(coordinate);
+        assertClassInvariants();
         return cAng;
     }
 
     @Override
-    public void writeOn(ResultSet rset) throws SQLException, ValueOutOfRangeException {
+    public void writeOn(ResultSet rset) throws SQLException, IllegalArgumentException, ValueOutOfRangeException {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //pre-condition
         if (rset == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Parameter ResultSet in writeOn was null.");
         //method
         CartesianCoordinate coor = this.asCartesianCoordinate();
         rset.updateDouble("coordinate_x", coor.getX());
@@ -73,14 +69,13 @@ public abstract class AbstractCoordinate implements Coordinate {
         rset.updateDouble("coordinate_z", coor.getZ());
         //no post-condition
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
     }
 
     @Override
     public boolean isEqual(Coordinate coor) throws ValueOutOfRangeException {
         //assert class invariant
-        assertClassInvariants(this);
-        assertClassInvariants(coor);
+        assertClassInvariants();
         //no pre-condition as coor can perfectly well be null
         if (coor == null)
             return false;
@@ -93,17 +88,16 @@ public abstract class AbstractCoordinate implements Coordinate {
         boolean ret = xDiff < tolerance && yDiff < tolerance && zDiff < tolerance;
         //no post-condition
         //assert class invariant
-        assertClassInvariants(this);
-        assertClassInvariants(coor);
+        assertClassInvariants();
         return ret;
     }
 
     protected static void assertCoordinateInputNotNull(Coordinate coordinate) throws IllegalArgumentException {
         if (coordinate == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Parameter coordinate was null.");
     }
 
-    protected static void assertClassInvariants(Coordinate coordinate) throws IllegalArgumentException{
+    protected static void assertClassInvariants() throws IllegalArgumentException{
         //there is no invariant for Coordinate, so this function is empty.
     }
 }

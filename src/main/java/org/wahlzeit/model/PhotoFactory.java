@@ -36,8 +36,9 @@ public class PhotoFactory {
 	/**
 	 * Method to set the singleton instance of PhotoFactory.
 	 */
-	protected static synchronized void setInstance(PhotoFactory photoFactory) {
+	protected static synchronized void setInstance(PhotoFactory photoFactory) throws IllegalStateException {
 		if (instance != null) {
+			FlowerLog.logError("It was attempted to initialize PhotoFactory twice.");
 			throw new IllegalStateException("attempt to initialize PhotoFactory twice");
 		}
 		instance = photoFactory;
@@ -75,7 +76,12 @@ public class PhotoFactory {
 	 * 
 	 */
 	public Photo createPhoto(ResultSet rs) throws SQLException {
-		return new Photo(rs);
+		try {
+			return new Photo(rs);
+		} catch (SQLException exception) {
+			FlowerLog.logError("Photo could not be created due to SQL error.");
+			throw exception;
+		}
 	}
 	
 	/**

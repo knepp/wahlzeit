@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.FlowerLog;
+import org.wahlzeit.services.Log;
 import org.wahlzeit.services.SysLog;
 
 import java.sql.ResultSet;
@@ -20,8 +22,9 @@ public class FlowerPhotoFactory extends PhotoFactory{
         return instance;
     }
 
-    protected static synchronized void setInstance(FlowerPhotoFactory fPhotoFactory) {
+    protected static synchronized void setInstance(FlowerPhotoFactory fPhotoFactory) throws IllegalStateException {
         if (instance != null) {
+            FlowerLog.logError("It was attempted to initialize FlowerPhotoFactory twice.");
             throw new IllegalStateException("attempt to initialize (Flower)PhotoFactory twice");
         }
         instance = fPhotoFactory;

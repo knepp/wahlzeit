@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.FlowerLog;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -37,8 +39,13 @@ public class FlowerPhoto extends Photo{
         super(myId, location);
         this.flowerName = flowerName;
     }
-    public FlowerPhoto(ResultSet rset) throws SQLException {//TODO evtl ResultSet anpassen?
-        readFrom(rset);
+    public FlowerPhoto(ResultSet rset) throws SQLException {
+        try {
+            readFrom(rset);
+        } catch (SQLException ex) {
+            FlowerLog.logError("FlowerPhoto could not be created due to an SQL error.");
+            throw ex;
+        }
     }
 
     //getter and setter for the flower name
@@ -51,13 +58,23 @@ public class FlowerPhoto extends Photo{
 
     @Override
     public void readFrom(ResultSet rset) throws SQLException {
-        super.readFrom(rset);
-        this.flowerName = rset.getString("flower_name");
+        try {
+            super.readFrom(rset);
+            this.flowerName = rset.getString("flower_name");
+        } catch (SQLException ex) {
+            FlowerLog.logError("readFrom in FlowerPhoto failed.");
+            throw ex;
+        }
     }
 
     @Override
     public void writeOn(ResultSet rset) throws SQLException {
-        super.writeOn(rset);
-        rset.updateString("flower_name", flowerName);
+        try {
+            super.writeOn(rset);
+            rset.updateString("flower_name", flowerName);
+        } catch (SQLException ex) {
+            FlowerLog.logError("writeOn failed in FlowerPhoto");
+            throw ex;
+        }
     }
 }

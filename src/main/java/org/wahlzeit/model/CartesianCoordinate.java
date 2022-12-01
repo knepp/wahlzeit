@@ -30,7 +30,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     @Override
     public boolean equals(Object obj) {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //no pre-condition needed as all objects can be worked with
         if (obj == this)
             return true;
@@ -45,16 +45,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
     @Override
     public int hashCode() {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //no pre-condition as this cannot be null and every coordinate has x, y and z, there is no other possibility
         return Objects.hash(x, y, z);
         //no post-condition needed
     }
 
-    public static CartesianCoordinate readFrom(ResultSet rset) throws SQLException {
+    public static CartesianCoordinate readFrom(ResultSet rset) throws SQLException, IllegalArgumentException {
         //pre-condition rset not null
         if (rset == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Parameter ResultSet for CartesianCoordinate.readFrom was null.");
         //method
         return new CartesianCoordinate(rset.getDouble("coordinate_x"),
                 rset.getDouble("coordinate_y"), rset.getDouble("coordinate_z"));
@@ -64,7 +64,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //no pre-condition needed
         return this;
         //no post-condition needed
@@ -74,7 +74,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     @Override
     public SphericCoordinate asSphericCoordinate() throws ValueOutOfRangeException {
         //assert class invariant
-        assertClassInvariants(this);
+        assertClassInvariants();
         //no pre-condition needed
         double r, t, p;
         r = Math.sqrt(x*x + y*y + z*z);

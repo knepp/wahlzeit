@@ -119,7 +119,13 @@ public class PhotoManager extends ObjectManager {
 	 * 
 	 */
 	protected Photo createObject(ResultSet rset) throws SQLException {
-		return PhotoFactory.getInstance().createPhoto(rset);
+		try {
+			Photo ph = PhotoFactory.getInstance().createPhoto(rset);
+			return ph;
+		} catch (SQLException exception) {
+			FlowerLog.logError("Photo could not be created in PhotoManager's createObject.");
+			throw exception;
+		}
 	}
 	
 	/**
@@ -129,7 +135,12 @@ public class PhotoManager extends ObjectManager {
 	 */
 	public void addPhoto(Photo photo) {
 		PhotoId id = photo.getId();
-		assertIsNewPhoto(id);
+		try {
+			assertIsNewPhoto(id);
+		} catch (IllegalStateException exception) {
+			FlowerLog.logError("Photo with this id already exists.");
+			throw exception;
+		}
 		doAddPhoto(photo);
 
 		try {
@@ -341,7 +352,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * @methodtype assertion
 	 */
-	protected void assertIsNewPhoto(PhotoId id) {
+	protected void assertIsNewPhoto(PhotoId id) throws IllegalStateException {
 		if (hasPhoto(id)) {
 			throw new IllegalStateException("Photo already exists!");
 		}
