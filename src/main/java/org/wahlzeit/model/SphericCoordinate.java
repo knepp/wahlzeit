@@ -2,11 +2,16 @@ package org.wahlzeit.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Objects;
+
+import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 
 public class SphericCoordinate extends AbstractCoordinate{
     private final double phi, theta, radius;
+    private static HashMap<Integer, SphericCoordinate> sphericHashMap;
 
-    public SphericCoordinate(double phi, double theta, double radius) throws ValueOutOfRangeException {
+    private SphericCoordinate(double phi, double theta, double radius) throws ValueOutOfRangeException {
         //pre-condition
         if(radius < 0)
             throw new ValueOutOfRangeException("Radius must be at least 0. Exception thrown in SphericCoordinate constructor.");
@@ -16,6 +21,18 @@ public class SphericCoordinate extends AbstractCoordinate{
         this.radius = radius;
         //post-condition
         assertSphericValuesInRange(this);
+    }
+
+    public static SphericCoordinate getSphericCoordinate(double phi, double theta, double radius) throws ValueOutOfRangeException {
+        int hash = hash(phi, theta, radius);
+        SphericCoordinate c = sphericHashMap.get(hash);
+        //check if coordinate in hashMap
+        if (c != null)
+            return c;
+        //coordinate does not exist yet -> create and put into hashMap
+        c = new SphericCoordinate(phi,theta,radius);
+        sphericHashMap.put(hash, c);
+        return c;
     }
 
     public double getPhi() {
@@ -28,6 +45,17 @@ public class SphericCoordinate extends AbstractCoordinate{
         return radius;
     }
 
+    private static int hash(double phi, double theta, double radius) {
+        //pre-condition
+        if(radius < 0)
+            throw new IllegalArgumentException("Radius must be at least 0. Exception thrown in SphericCoordinate constructor.");
+        //assert class invariant
+        assertClassInvariants();
+        //no pre-condition as this cannot be null and every coordinate has x, y and z, there is no other possibility
+        return Objects.hash((int) (phi/EPSILON), (int) (theta/EPSILON), (int) (radius/EPSILON));
+        //no post-condition needed
+    }
+
     @Override
     public CartesianCoordinate asCartesianCoordinate() throws ValueOutOfRangeException {
         //assert class invariant
@@ -35,7 +63,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         //pre-condition
         assertSphericValuesInRange(this);
         //method
-        return new CartesianCoordinate(radius * Math.sin(theta)*Math.cos(phi),
+        return getCartesianCoordinate(radius * Math.sin(theta)*Math.cos(phi),
                 radius * Math.sin(theta)*Math.sin(phi),
                 radius * Math.cos(theta));
         //no post-condition needed

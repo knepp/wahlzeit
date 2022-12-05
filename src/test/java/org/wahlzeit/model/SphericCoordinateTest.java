@@ -3,26 +3,27 @@ package org.wahlzeit.model;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.wahlzeit.model.SphericCoordinate.getSphericCoordinate;
 
 public class SphericCoordinateTest {
     @Test
     public void testIsEqual() throws ValueOutOfRangeException {
-        SphericCoordinate c1 = new SphericCoordinate(1,2,3),
-                c2 = new SphericCoordinate(1,2,3),
-                c3 = new SphericCoordinate(3,2,1);
+        SphericCoordinate c1 = getSphericCoordinate(1,2,3),
+                c2 = getSphericCoordinate(1,2,3),
+                c3 = getSphericCoordinate(3,2,1);
         assertTrue(c1.isEqual(c2));
         assertFalse(c1.isEqual(c3));
     }
 
     @Test
     public void testAsSpherical() throws ValueOutOfRangeException {
-        SphericCoordinate c = new SphericCoordinate(1.4,5.7,3.1);
+        SphericCoordinate c = getSphericCoordinate(1.4,5.7,3.1);
         assertTrue(c == c.asSphericCoordinate());
     }
 
     @Test
     public void testAsCartesianCoordinate() throws ValueOutOfRangeException {
-        SphericCoordinate c = new SphericCoordinate(1.1,2.7,3.3);
+        SphericCoordinate c = getSphericCoordinate(1.1,2.7,3.3);
         SphericCoordinate coor2 = c.asCartesianCoordinate().asSphericCoordinate();
         assertEquals(c.getPhi(), coor2.getPhi(), 0.1);
         assertEquals(c.getTheta(), coor2.getTheta(), 0.1);
@@ -30,14 +31,14 @@ public class SphericCoordinateTest {
     }
     @Test
     public void testIsEqualDifferentCoordinates() throws ValueOutOfRangeException {
-        SphericCoordinate c1 = new SphericCoordinate(1.4,2.3,3.2);
+        SphericCoordinate c1 = getSphericCoordinate(1.4,2.3,3.2);
         CartesianCoordinate c2 = c1.asCartesianCoordinate();
         assertTrue(c1.isEqual(c2));
     }
     @Test
     public void centralAngleTest() throws ValueOutOfRangeException {
-        SphericCoordinate c1 = new SphericCoordinate(3, 2, 1),
-                c2 = new SphericCoordinate(2,1,3);
+        SphericCoordinate c1 = getSphericCoordinate(3, 2, 1),
+                c2 = getSphericCoordinate(2,1,3);
         assertEquals(1.212248, c1.getCentralAngle(c2), 0.0001);
         assertEquals(0, c1.getCentralAngle(c1), 0);
     }
@@ -59,11 +60,11 @@ public class SphericCoordinateTest {
     //testing pre-conditions
     @Test
     public void testConstructorPreCond_noException() throws ValueOutOfRangeException {
-        SphericCoordinate c = new SphericCoordinate(1,2,5);
+        SphericCoordinate c = getSphericCoordinate(1,2,5);
     }@Test
     public void testConstructorPreCond_exception() {
         try {
-            SphericCoordinate c = new SphericCoordinate(1,2,-5);
+            SphericCoordinate c = getSphericCoordinate(1,2,-5);
         } catch (ValueOutOfRangeException e) {
             return;
         }

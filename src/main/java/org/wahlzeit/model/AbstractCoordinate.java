@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 
 public abstract class AbstractCoordinate implements Coordinate {
+    protected static final double EPSILON = 0.000001;
+
     @Override
     public abstract CartesianCoordinate asCartesianCoordinate() throws ValueOutOfRangeException;
     @Override
@@ -81,11 +83,7 @@ public abstract class AbstractCoordinate implements Coordinate {
             return false;
         CartesianCoordinate c1 = this.asCartesianCoordinate();
         CartesianCoordinate c2 = coor.asCartesianCoordinate();
-        double tolerance = 0.000001;
-        double xDiff = Math.abs(c1.getX() - c2.getX());
-        double yDiff = Math.abs(c1.getY() - c2.getY());
-        double zDiff = Math.abs(c1.getZ() - c2.getZ());
-        boolean ret = xDiff < tolerance && yDiff < tolerance && zDiff < tolerance;
+        boolean ret = c1 == c2;
         //no post-condition
         //assert class invariant
         assertClassInvariants();

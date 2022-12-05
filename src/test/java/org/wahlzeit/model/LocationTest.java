@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.security.InvalidParameterException;
 
 import static org.junit.Assert.*;
+import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 
 /**
  * Test for the Coordinate class.
@@ -13,7 +14,7 @@ public class LocationTest {
     @Test
     public void testCreateNotNull() {
         try {
-            CartesianCoordinate coordinate = new CartesianCoordinate(1.3, 3.2, 5.1);
+            CartesianCoordinate coordinate = getCartesianCoordinate(1.3, 3.2, 5.1);
 
             Location location = new Location(coordinate);
             assertNotNull(location);

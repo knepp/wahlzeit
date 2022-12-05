@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org. mockito.Mockito.*;
+import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class PhotoTest {
     }
     @Test
     public void testCreateWithLocation() throws ValueOutOfRangeException {
-        CartesianCoordinate coor1 = new CartesianCoordinate(1.2,3.4,5.6);
+        CartesianCoordinate coor1 = getCartesianCoordinate(1.2,3.4,5.6);
         Location location1 = new Location(coor1);
         Photo photo1 = new Photo(location1);
         Assert.assertNotNull(photo1.location);
@@ -49,7 +50,7 @@ public class PhotoTest {
         Assert.assertEquals(5.6, photo1.location.coordinate.asCartesianCoordinate().getZ(), 0.0);
 
 
-        CartesianCoordinate coor2 = new CartesianCoordinate(7.8,9.0,10.11);
+        CartesianCoordinate coor2 = getCartesianCoordinate(7.8,9.0,10.11);
         Location location2 = new Location(coor2);
         PhotoId id = PhotoId.getNextId();   //can also be null for this test
         Photo photo2 = new Photo(id, location2);
@@ -65,7 +66,7 @@ public class PhotoTest {
     }
     @Test
     public void testWriteOn() throws SQLException, ValueOutOfRangeException {
-        CartesianCoordinate coor = new CartesianCoordinate(4,5,6);
+        CartesianCoordinate coor = getCartesianCoordinate(4,5,6);
         Location loc = new Location(coor);
         ResultSet rset = Mockito.mock(ResultSet.class);
         loc.writeOn(rset);
@@ -75,7 +76,7 @@ public class PhotoTest {
     }
     @Test
     public void testReadFrom() throws SQLException {
-        CartesianCoordinate coor = new CartesianCoordinate(4,5,6);
+        CartesianCoordinate coor = getCartesianCoordinate(4,5,6);
         Location loc = new Location(coor);
         ResultSet rset = Mockito.mock(ResultSet.class);
         Location.readFrom(rset);
