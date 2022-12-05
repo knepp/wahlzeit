@@ -1,7 +1,5 @@
 package org.wahlzeit.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -9,7 +7,7 @@ import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 
 public class SphericCoordinate extends AbstractCoordinate{
     private final double phi, theta, radius;
-    private static HashMap<Integer, SphericCoordinate> sphericHashMap;
+    private static HashMap<Integer, SphericCoordinate> sphericHashMap = new HashMap<>();
 
     private SphericCoordinate(double phi, double theta, double radius) throws ValueOutOfRangeException {
         //pre-condition
@@ -24,7 +22,9 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
     public static SphericCoordinate getSphericCoordinate(double phi, double theta, double radius) throws ValueOutOfRangeException {
-        int hash = hash(phi, theta, radius);
+        phi = moduloAngle(phi);
+        theta = moduloAngle(theta);
+        int hash = sphericHash(phi, theta, radius);
         SphericCoordinate c = sphericHashMap.get(hash);
         //check if coordinate in hashMap
         if (c != null)
@@ -45,14 +45,16 @@ public class SphericCoordinate extends AbstractCoordinate{
         return radius;
     }
 
-    private static int hash(double phi, double theta, double radius) {
+    private static int sphericHash(double phi, double theta, double radius) {
         //pre-condition
         if(radius < 0)
             throw new IllegalArgumentException("Radius must be at least 0. Exception thrown in SphericCoordinate constructor.");
         //assert class invariant
         assertClassInvariants();
         //no pre-condition as this cannot be null and every coordinate has x, y and z, there is no other possibility
-        return Objects.hash((int) (phi/EPSILON), (int) (theta/EPSILON), (int) (radius/EPSILON));
+        return Objects.hash(Math.round(phi/EPSILON),
+                Math.round(theta/EPSILON),
+                Math.round(radius/EPSILON));
         //no post-condition needed
     }
 

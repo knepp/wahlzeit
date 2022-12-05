@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
+import static org.wahlzeit.model.AbstractCoordinate.EPSILON;
 import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 
 public class CartesianCoordinateTest {
@@ -94,5 +95,15 @@ public class CartesianCoordinateTest {
             return;
         }
         fail();
+    }
+
+    @Test
+    public void testGetCartesianCoordinate() throws ValueOutOfRangeException {
+        CartesianCoordinate c1 = getCartesianCoordinate(1,2,3);
+        CartesianCoordinate c2 = getCartesianCoordinate(1,2,3);
+        assertSame(c1, c2);
+        c2 = getCartesianCoordinate(1,2.0000003,3);
+        assertSame(c1,c2);
+        assertSame(c1, c1.asSphericCoordinate().asCartesianCoordinate());
     }
 }

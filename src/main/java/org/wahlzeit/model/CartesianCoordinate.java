@@ -8,7 +8,7 @@ import java.util.Objects;
 import static org.wahlzeit.model.SphericCoordinate.getSphericCoordinate;
 
 public class CartesianCoordinate extends AbstractCoordinate {
-    private static HashMap<Integer, CartesianCoordinate> cartesianHashMap;
+    private static HashMap<Integer, CartesianCoordinate> cartesianHashMap = new HashMap<>();
     private final double x, y, z;
 
     private CartesianCoordinate(double x, double y, double z) {
@@ -19,7 +19,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public static CartesianCoordinate getCartesianCoordinate(double x, double y, double z) {
-        int hash = hash(x,y,z);
+        int hash = cartesianHash(x,y,z);
         CartesianCoordinate c = cartesianHashMap.get(hash);
         //check if coordinate in hashMap
         if (c != null)
@@ -42,8 +42,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 
 
-    private static int hash(double x, double y, double z) {
-        return Objects.hash((int) (x/EPSILON), (int) (y/EPSILON), (int) (z/EPSILON));
+    private static int cartesianHash(double x, double y, double z) {
+        return Objects.hash(Math.round(x/EPSILON),
+                Math.round(y/EPSILON),
+                Math.round(z/EPSILON));
     }
 
     @Override
@@ -66,7 +68,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         //assert class invariant
         assertClassInvariants();
         //no pre-condition as this cannot be null and every coordinate has x, y and z, there is no other possibility
-        return hash(x,y,z);
+        return cartesianHash(x,y,z);
         //no post-condition needed
     }
 

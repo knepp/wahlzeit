@@ -3,6 +3,7 @@ package org.wahlzeit.model;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 import static org.wahlzeit.model.SphericCoordinate.getSphericCoordinate;
 
 public class SphericCoordinateTest {
@@ -62,12 +63,21 @@ public class SphericCoordinateTest {
     public void testConstructorPreCond_noException() throws ValueOutOfRangeException {
         SphericCoordinate c = getSphericCoordinate(1,2,5);
     }@Test
-    public void testConstructorPreCond_exception() {
+    public void testConstructorPreCond_exception() throws ValueOutOfRangeException {
         try {
             SphericCoordinate c = getSphericCoordinate(1,2,-5);
-        } catch (ValueOutOfRangeException e) {
+        } catch (IllegalArgumentException e) {
             return;
         }
         fail();
+    }
+    @Test
+    public void testGetSphericCoordinate() throws ValueOutOfRangeException {
+        SphericCoordinate c1 = getSphericCoordinate(1,2,3);
+        SphericCoordinate c2 = getSphericCoordinate(1,2,3);
+        assertSame(c1, c2);
+        c2 = getSphericCoordinate(1,2.0000003,3);
+        assertSame(c1,c2);
+        assertSame(c1, c1.asCartesianCoordinate().asSphericCoordinate());
     }
 }
