@@ -1,10 +1,16 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
+
 import java.util.HashMap;
 import java.util.Objects;
 
 import static org.wahlzeit.model.CartesianCoordinate.getCartesianCoordinate;
 
+@PatternInstance(
+    patternName="Value Object Pattern",
+    participants = {"value object"}
+)
 public class SphericCoordinate extends AbstractCoordinate{
     private final double phi, theta, radius;
     private static HashMap<Integer, SphericCoordinate> sphericHashMap = new HashMap<>();

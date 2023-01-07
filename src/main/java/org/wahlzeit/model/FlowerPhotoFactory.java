@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.services.FlowerLog;
 import org.wahlzeit.services.Log;
 import org.wahlzeit.services.SysLog;
@@ -7,12 +8,21 @@ import org.wahlzeit.services.SysLog;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@PatternInstance(
+        patternName = "Abstract Factory Pattern",
+        participants = {"concrete factory"}
+)
+@PatternInstance(
+        patternName = "Singleton Pattern",
+        participants = {"Singleton"}
+)
 public class FlowerPhotoFactory extends PhotoFactory{
 
     /**
      * Hidden singleton instance; needs to be initialized from the outside.
      */
     private static FlowerPhotoFactory instance = null;
+
 
     public static synchronized FlowerPhotoFactory getInstance() {
         if (instance == null) {

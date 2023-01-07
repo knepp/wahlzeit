@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -7,6 +9,10 @@ import java.util.Objects;
 
 import static org.wahlzeit.model.SphericCoordinate.getSphericCoordinate;
 
+@PatternInstance(
+        patternName="Value Object Pattern",
+        participants = {"value object"}
+)
 public class CartesianCoordinate extends AbstractCoordinate {
     private static HashMap<Integer, CartesianCoordinate> cartesianHashMap = new HashMap<>();
     private final double x, y, z;

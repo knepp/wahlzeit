@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.services.DataObject;
 
 import java.sql.ResultSet;
@@ -11,5 +12,10 @@ public interface Coordinate {
     SphericCoordinate asSphericCoordinate() throws ValueOutOfRangeException;
     double getCentralAngle(Coordinate coordinate) throws ValueOutOfRangeException, IllegalArgumentException;
     boolean isEqual(Coordinate coordinate) throws ValueOutOfRangeException;
+
+    @PatternInstance(
+            patternName="Chain of Responsibility Pattern",
+            participants = {"handler"}
+    )
     void writeOn(ResultSet rset) throws SQLException, ValueOutOfRangeException, IllegalArgumentException;
 }

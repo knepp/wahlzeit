@@ -1,10 +1,15 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.services.FlowerLog;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@PatternInstance(
+        patternName = "Abstract Factory Pattern",
+        participants = {"concrete product"}
+)
 public class FlowerPhoto extends Photo{
     private String flowerName;  //optional: name of the flower in the picture
     public FlowerPhoto() {

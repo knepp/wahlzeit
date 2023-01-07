@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -57,6 +59,10 @@ public abstract class AbstractCoordinate implements Coordinate {
         return cAng;
     }
 
+    @PatternInstance(
+            patternName="Chain of Responsibility Pattern",
+            participants = {"receiver"}
+    )
     @Override
     public void writeOn(ResultSet rset) throws SQLException, IllegalArgumentException, ValueOutOfRangeException {
         //assert class invariant

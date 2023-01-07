@@ -9,9 +9,15 @@ import java.sql.*;
 import java.net.*;
 import java.util.concurrent.Flow;
 
+import org.wahlzeit.annotations.PatternInstance;
+import org.wahlzeit.annotations.PatternInstanceArray;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
 
+@PatternInstance(
+		patternName = "Abstract Factory Pattern",
+		participants = {"concrete product"}
+)
 /**
  * A photo represents a user-provided (uploaded) photo.
  */
@@ -171,10 +177,11 @@ public class Photo extends DataObject {
 			throw exception;
 		}
 	}
-	
-	/**
-	 * 
-	 */
+
+	@PatternInstance(
+			patternName="Chain of Responsibility Pattern",
+			participants = {"sender"}
+	)
 	public void writeOn(ResultSet rset) throws SQLException {
 		try {
 			rset.updateInt("id", id.asInt());
