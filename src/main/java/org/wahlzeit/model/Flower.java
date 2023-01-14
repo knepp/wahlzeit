@@ -1,15 +1,18 @@
 package org.wahlzeit.model;
 
 import static java.util.Objects.hash;
+import static org.wahlzeit.model.FlowerManager.flowerId;
 
 public class Flower {
 
     private FlowerType type = null;
     private Location location;
     private String color;
+    private long id;
 
     public Flower(FlowerType type) {
         this.type = type;
+        id = setNextId();
     }
 
     public FlowerType getType() {
@@ -33,7 +36,12 @@ public class Flower {
         return color;
     }
 
-    public int getId() {
-        return hash(this);
+    public static synchronized long setNextId() {
+        flowerId++;
+        return flowerId;
+    }
+
+    public long getId() {
+        return id;
     }
 }

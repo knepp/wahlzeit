@@ -13,8 +13,9 @@ import static java.util.Objects.hash;
 
 public class FlowerManager {
 
-    private HashMap<Integer, Flower> flowers = new HashMap<>();
+    private HashMap<Long, Flower> flowers = new HashMap<>();
     private HashMap<Integer, FlowerType> types = new HashMap<>();
+    public static long flowerId = 0;
 
 
     private static FlowerManager instance = null;

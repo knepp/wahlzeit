@@ -26,4 +26,12 @@ public class FlowerTest {
         Flower flower2 = fm.createFlower("dahlia");
         assertNotEquals(flower.getId(), flower2.getId());
     }
+
+    @Test
+    public void testGetSetId() {
+        FlowerManager fm = FlowerManager.getInstance();
+        Flower f1 = fm.createFlower("orchid");
+        Flower f2 = fm.createFlower("orchid");
+        assertNotEquals(f1.getId(), f2.getId());
+    }
 }
