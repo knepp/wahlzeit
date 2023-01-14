@@ -12,37 +12,46 @@ import java.sql.SQLException;
 )
 public class FlowerPhoto extends Photo{
     private String flowerName;  //optional: name of the flower in the picture
+    private Flower flower;
     public FlowerPhoto() {
         super();
+        this.flower = null;
         this.flowerName = "";
     }
-    public FlowerPhoto(String flowerName) {
+    public FlowerPhoto(Flower flower) {
         super();
-        this.flowerName = flowerName;
+        this.flower = flower;
+        this.flowerName = flower.getType().getName();
     }
     public FlowerPhoto(Location location) {
         super(location);
+        this.flower = null;
         this.flowerName = "";
     }
-    public FlowerPhoto(Location location, String flowerName) {
+    public FlowerPhoto(Location location, Flower flower) {
         super(location);
-        this.flowerName = flowerName;
+        this.flower = flower;
+        this.flowerName = flower.getType().getName();
     }
     public FlowerPhoto(PhotoId myId) {
         super(myId);
+        this.flower = null;
         this.flowerName = "";
     }
-    public FlowerPhoto(PhotoId myId, String flowerName) {
+    public FlowerPhoto(PhotoId myId, Flower flower) {
         super(myId);
-        this.flowerName = flowerName;
+        this.flower = flower;
+        this.flowerName = flower.getType().getName();
     }
     public FlowerPhoto(PhotoId myId, Location location) {
         super(myId, location);
+        this.flower = null;
         this.flowerName = "";
     }
-    public FlowerPhoto(PhotoId myId, Location location, String flowerName) {
+    public FlowerPhoto(PhotoId myId, Location location, Flower flower) {
         super(myId, location);
-        this.flowerName = flowerName;
+        this.flower = flower;
+        this.flowerName = flower.getType().getName();
     }
     public FlowerPhoto(ResultSet rset) throws SQLException {
         try {
@@ -55,10 +64,11 @@ public class FlowerPhoto extends Photo{
 
     //getter and setter for the flower name
     public String getFlowerName() {
-        return flowerName;
+        return flower.getType().getName();
     }
-    public void setFlowerName(String flowerName) {
-        this.flowerName = flowerName;
+    public void setFlowerName(Flower flower) {
+        this.flower = flower;
+        flowerName = flower.getType().getName();
     }
 
     @Override
